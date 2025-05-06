@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.3.1",
+    "next": "^15.3.1",
     "postcss": "^8.5.3",
     "prop-types": "^15.8.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
