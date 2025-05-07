@@ -1,59 +1,3 @@
-// const manu = [
-//   { name: "Margherita", price: 8 },
-//   { name: "Pepperoni", price: 10 },
-//   { name: "Hawaiian", price: 10 },
-//   { name: "Veggie", price: 9 },
-// ];
-//
-// export default function page() {
-//   let cashInRegister = 100;
-//   let nextOrderId = 1;
-//   const orderQueue = [];
-//
-//   function addNewPizza(pizza = {}) {
-//     manu.push(pizza);
-//   }
-//
-//   function orderPizza(pizzaName) {
-//     const selectedPizza = manu.find((pizzaObj) => pizzaObj.name === pizzaName);
-//
-//     if (!selectedPizza) {
-//       console.error(`${pizzaName} is not available in the menu`);
-//       return null;
-//     }
-//
-//     cashInRegister += selectedPizza.price;
-//     const newOrder = {
-//       id: nextOrderId++,
-//       pizza: selectedPizza,
-//       status: "ordered",
-//     };
-//     orderQueue.push(newOrder);
-//
-//     return newOrder;
-//   }
-//
-//   function completeOrder(orderId) {
-//     const order = orderQueue.find((orderObj) => orderObj.id === orderId);
-//     order.status = "completed";
-//
-//     return order;
-//   }
-//
-//   addNewPizza({ name: "Supreme", price: 12 });
-//   addNewPizza({ name: "BBQ Chicken", price: 15 });
-//   addNewPizza({ name: "Meat Lovers", price: 13 });
-//
-//   orderPizza("BBQ Chicken");
-//   completeOrder("1");
-//
-//   console.log("Manu", manu);
-//   console.log("Cash in register", cashInRegister);
-//   console.log("Order queue", orderQueue);
-//
-//   return <div className="">About</div>;
-// }
-
 "use client";
 
 import { useState } from "react";
@@ -138,6 +82,7 @@ export default function Page() {
           addNewPizza({
             name: "Supreme",
             price: 12 + Math.floor(Math.random() * 5),
+            size: "large",
           })
         }
         className="mb-4 rounded bg-blue-700 px-4 py-2"
@@ -151,7 +96,7 @@ export default function Page() {
       <ul>
         {orders.map((order) => (
           <li key={order.id} className="mb-2">
-            #{order.id} - {order.pizza.name} ({order.status}){" "}
+            #{order.id} - {order.pizza.name} ({order.status})
             {order.status === "ordered" && (
               <button
                 onClick={() => completeOrder(order.id)}
