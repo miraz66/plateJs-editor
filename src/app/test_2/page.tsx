@@ -1,25 +1,41 @@
-type Person = {
-  name: string;
-  age: number;
-  isStudent: boolean;
+type UserRole = "admin" | "user" | "guest";
+type User = {
+  username: string;
+  role: UserRole;
 };
 
-const person_1: Person = {
-  name: "John",
-  age: 25,
-  isStudent: false,
-};
+const people: User[] = [
+  { username: "John", role: "admin" },
+  { username: "Jane", role: "user" },
+  { username: "Bob", role: "guest" },
+];
 
-const person_2: Person = {
-  name: "Jane",
-  age: 22,
-  isStudent: true,
-};
+function fetchUserDetails(username: string): User {
+  const user = people.find((person) => person.username === username);
+  if (!user) {
+    throw new Error(`User with username "${username}" not found`);
+  }
+  return user;
+}
 
-const people: Array<Person> = [person_1, person_2];
+// Correct usage - searching for existing usernames
+console.log(fetchUserDetails("John")); // This will work
+// console.log(fetchUserDetails("admin")); // This would throw error
 
 export default function Test_2() {
-  console.log("people", people);
-
-  return <div className="">page component</div>;
+  // Example of safe usage in component
+  try {
+    const adminUser = fetchUserDetails("John");
+    return (
+      <div className="">
+        <h1>User Details</h1>
+        <p>Username: {adminUser.username}</p>
+        <p>Role: {adminUser.role}</p>
+      </div>
+    );
+  } catch (error) {
+    return (
+      <div className="text-red-500">Error: {(error as Error).message}</div>
+    );
+  }
 }
