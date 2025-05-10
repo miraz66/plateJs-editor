@@ -1,13 +1,15 @@
 type UserRole = "admin" | "user" | "guest";
 type User = {
+  id: number;
   username: string;
   role: UserRole;
 };
+let nextUserId = 1;
 
 const people: User[] = [
-  { username: "John", role: "admin" },
-  { username: "Jane", role: "user" },
-  { username: "Bob", role: "guest" },
+  { id: nextUserId++, username: "John", role: "admin" },
+  { id: nextUserId++, username: "Jane", role: "user" },
+  { id: nextUserId++, username: "Bob", role: "guest" },
 ];
 
 function fetchUserDetails(username: string): User {
@@ -18,12 +20,21 @@ function fetchUserDetails(username: string): User {
   return user;
 }
 
-// Correct usage - searching for existing usernames
-console.log(fetchUserDetails("John")); // This will work
-// console.log(fetchUserDetails("admin")); // This would throw error
+function updateUser(id: number, updates: Partial<User>) {
+  const foundUser = people.find((user) => user.id === id);
+  if (!foundUser) {
+    console.error(`User with ID ${id} not found`);
+    return;
+  }
+  Object.assign(foundUser, updates);
+}
+
+updateUser(1, { role: "guest" });
+
+console.log(people);
 
 export default function Test_2() {
-  // Example of safe usage in component
+  // Example of safe usage in try-catch
   try {
     const adminUser = fetchUserDetails("John");
     return (

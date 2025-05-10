@@ -22,12 +22,15 @@ export default function page() {
   let nextOrderId = 1;
   const orderQueue: Array<Order> = [];
 
-  function addNewPizza(pizzaObj: Pizza) {
-    menu.push(pizzaObj);
+  function addNewPizza(pizzaObj: { name: string; price: number }): void {
+    const newPizza = { ...pizzaObj, id: menu.length + 1 };
+    menu.push(newPizza);
   }
 
-  function placeOrder(pizzaName: string) {
-    const selectedPizza = menu.find((pizzaObj) => pizzaObj.name === pizzaName);
+  function placeOrder(pizzaName: string): Order | undefined {
+    const selectedPizza: Pizza | undefined = menu.find(
+      (pizzaObj) => pizzaObj.name === pizzaName,
+    );
     if (!selectedPizza) {
       console.error(`${pizzaName} does not exist in the menu`);
       return;
@@ -42,8 +45,10 @@ export default function page() {
     return newOrder;
   }
 
-  function completeOrder(orderId: number) {
-    const order = orderQueue.find((order) => order.id === orderId);
+  function completeOrder(orderId: number): Order | undefined {
+    const order: Order | undefined = orderQueue.find(
+      (order): boolean => order.id === orderId,
+    );
     if (!order) {
       console.error(`Order with ID ${orderId} not found`);
       return;
@@ -53,26 +58,27 @@ export default function page() {
     return order;
   }
 
-  function getPizzaDetail(identifier: string | number) {
+  function getPizzaDetail(identifier: string | number): Pizza | undefined {
     if (typeof identifier === "string") {
       return menu.find(
-        (pizza) => pizza.name.toLowerCase() === identifier.toLowerCase(),
+        (pizza): boolean =>
+          pizza.name.toLowerCase() === identifier.toLowerCase(),
       );
     } else {
-      return menu.find((pizza) => pizza.id === identifier);
+      return menu.find((pizza): boolean => pizza.id === identifier);
     }
   }
 
-  addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12 });
-  addNewPizza({ id: 6, name: "BBQ Chicken", price: 12 });
-  addNewPizza({ id: 7, name: "Spicy Sausage", price: 11 });
+  addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
+  addNewPizza({ name: "BBQ Chicken", price: 12 });
+  addNewPizza({ name: "Spicy Sausage", price: 11 });
 
   placeOrder("Chicken Bacon Ranch");
   completeOrder(1);
 
-  // console.log("Menu:", menu);
-  // console.log("Cash in register:", cashInRegister);
-  // console.log("Order queue:", orderQueue);
+  console.log("Menu:", menu);
+  console.log("Cash in register:", cashInRegister);
+  console.log("Order queue:", orderQueue);
 
   return (
     <div className="mx-auto max-w-screen-md p-4">
@@ -81,7 +87,7 @@ export default function page() {
       <ul>
         {menu.map((pizza, index) => (
           <li key={index}>
-            {pizza.name} - ${pizza.price}
+            {pizza.id}. {pizza.name} - ${pizza.price}
           </li>
         ))}
       </ul>
