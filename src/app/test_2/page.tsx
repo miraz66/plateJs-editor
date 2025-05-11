@@ -31,6 +31,13 @@ function updateUser(id: number, updates: Partial<User>) {
 
 updateUser(1, { role: "guest" });
 
+function addNewUser(newUser: Omit<User, "username" | "id">): User {
+  const user: User = { username: "miraz", id: nextUserId++, ...newUser };
+  people.push(user);
+  return user;
+}
+
+addNewUser({ role: "user" });
 console.log(people);
 
 export default function Test_2() {

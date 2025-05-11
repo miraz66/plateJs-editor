@@ -1,3 +1,5 @@
+"use client";
+
 type Pizza = {
   id: number;
   name: string;
@@ -22,9 +24,10 @@ export default function page() {
   let nextOrderId = 1;
   const orderQueue: Array<Order> = [];
 
-  function addNewPizza(pizzaObj: { name: string; price: number }): void {
-    const newPizza = { ...pizzaObj, id: menu.length + 1 };
+  function addNewPizza(pizzaObj: Omit<Pizza, "id">): Pizza {
+    const newPizza = { id: menu.length + 1, ...pizzaObj };
     menu.push(newPizza);
+    return newPizza;
   }
 
   function placeOrder(pizzaName: string): Order | undefined {
