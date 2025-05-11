@@ -14,7 +14,16 @@ const voters = [
   { name: "Phil", age: 21, voted: true },
 ];
 
-function getLastItem(arr: any[]): any {}
+function getLastItem<PlaceholderType>(
+  arr: PlaceholderType[],
+): PlaceholderType | undefined {
+  return arr[arr.length - 1];
+}
+
+console.log(getLastItem(gameScores));
+console.log(getLastItem(favoriteThings));
+console.log(getLastItem(voters));
+
 export default function test_3() {
   return <div className="">page component</div>;
 }

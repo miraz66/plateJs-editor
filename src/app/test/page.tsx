@@ -48,6 +48,14 @@ export default function page() {
     return newOrder;
   }
 
+  function addToArray<Type>(arr: Type[], item: Type): Type[] {
+    arr.push(item);
+    return arr;
+  }
+
+  addToArray<Pizza>(menu, { id: 15, name: "Mushroom", price: 10 });
+  addToArray<Order>(orderQueue, { id: 6, pizza: menu[4], status: "ordered" });
+
   function completeOrder(orderId: number): Order | undefined {
     const order: Order | undefined = orderQueue.find(
       (order): boolean => order.id === orderId,
