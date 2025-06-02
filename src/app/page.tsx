@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <div className="mx-auto max-w-screen-lg px-4">
       <h1 className="py-5 text-3xl font-bold text-gray-400">
-        Fetch data from api
+        Fetch data from api with cache
       </h1>
       <ul className="mt-4 list-inside list-disc space-y-2 text-gray-500">
         {posts.map((data) => (
